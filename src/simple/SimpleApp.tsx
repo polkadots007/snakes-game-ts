@@ -23,7 +23,8 @@ function getRandomFoodPos() {
 }
 
 function updateFoodLocation(setFood: React.Dispatch<React.SetStateAction<FoodLocation>>) {
-    setFood((_prevLoc: FoodLocation) => getRandomFoodPos());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setFood((_prevLoc: FoodLocation) => getRandomFoodPos())
 }
 
 function checkGameOver(headPos: {x : number; y: number},
