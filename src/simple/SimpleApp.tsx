@@ -38,42 +38,39 @@ function checkGameOver(headPos: {x : number; y: number},
 }
 
 function handleStartGame(
-    event: React.MouseEvent<HTMLButtonElement>,
-    boardRef: React.RefObject<HTMLDivElement>,
-     setGameStatus: React.Dispatch<React.SetStateAction<boolean>>
-     ){
-    boardRef.current?.focus();
-    setGameStatus(prevStatus => !prevStatus)
+  _event: React.MouseEvent<HTMLButtonElement>,
+  boardRef: React.RefObject<HTMLDivElement>,
+  setGameStatus: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  boardRef.current?.focus()
+  setGameStatus((prevStatus) => !prevStatus)
 }
 
-function isDirectionValid(
-    direction: string,
-    newDirection:string
-){
-    const isChangeValid: boolean = (
-        (direction === 'ArrowRight' && newDirection !== 'ArrowLeft' ) ||
-        (direction === 'ArrowLeft' && newDirection !== 'ArrowRight' ) ||
-        (direction === 'ArrowUp' && newDirection !== 'ArrowDown' ) ||
-        (direction === 'ArrowDown' && newDirection !== 'ArrowUp' ) 
-    )
-    return isChangeValid;
+function isDirectionValid(direction: string, newDirection: string) {
+  const isChangeValid: boolean =
+    (direction === 'ArrowRight' && newDirection !== 'ArrowLeft') ||
+    (direction === 'ArrowLeft' && newDirection !== 'ArrowRight') ||
+    (direction === 'ArrowUp' && newDirection !== 'ArrowDown') ||
+    (direction === 'ArrowDown' && newDirection !== 'ArrowUp')
+  return isChangeValid
 }
 
 function handleKeyDown(
-    event: React.KeyboardEvent,
-     setSnake: React.Dispatch<React.SetStateAction<SnakeProps>>
-     ){
-         setSnake((prevSnake: SnakeProps) => {
-             if(isDirectionValid(prevSnake.direction, event.key)) prevSnake.direction = event.key;
-        return prevSnake;
-    })
+  event: React.KeyboardEvent,
+  setSnake: React.Dispatch<React.SetStateAction<SnakeProps>>
+) {
+  setSnake((prevSnake: SnakeProps) => {
+    if (isDirectionValid(prevSnake.direction, event.key))
+      prevSnake.direction = event.key
+    return prevSnake
+  })
 }
 
 function handlePause(
-    event: React.MouseEvent<HTMLButtonElement>,
-     setPauseGame: React.Dispatch<React.SetStateAction<boolean>>
-     ){
-    setPauseGame((prevPause: boolean)=>!prevPause)
+  _event: React.MouseEvent<HTMLButtonElement>,
+  setPauseGame: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  setPauseGame((prevPause: boolean) => !prevPause)
 }
 
 function moveSnake(
