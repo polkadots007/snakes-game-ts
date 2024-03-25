@@ -32,8 +32,6 @@ export default {
 
 
 # Tools we would be using to build the Snakes Game
-- Redux
-- Redux-saga
-- Canvas
 - React
-- Chakra-UI"# snakes-game-ts" 
+- Typescript
+- Hooks
