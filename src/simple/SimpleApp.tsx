@@ -9,7 +9,7 @@ import _ from 'lodash';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleFilledIcon  from '@mui/icons-material/PlayCircleFilled';
 
-const debug: boolean = true
+const debug: boolean = false
 
 const snakeStart: SnakeProps = {
   size: [
