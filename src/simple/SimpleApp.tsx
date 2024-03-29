@@ -49,11 +49,15 @@ function checkGameOver(
     headPos.y === 100 ||
     headPos.y === -4
   ) {
-    setSnake(snakeStart)
+    setSnake(() => ({
+      ...snakeStart,
+      direction: 'ArrowRight',
+    }))
     setHighScore((prevHighScore: number) =>
       prevHighScore > score ? prevHighScore : score
     )
     setScore(0)
+    debug && console.log('57')
     return false
   }
   return true
@@ -62,9 +66,15 @@ function checkGameOver(
 function handleStartGame(
   _event: React.MouseEvent<HTMLButtonElement>,
   boardRef: React.RefObject<HTMLDivElement>,
-  setGameStatus: React.Dispatch<React.SetStateAction<boolean>>
+  setGameStatus: React.Dispatch<React.SetStateAction<boolean>>,
+  setSnake: React.Dispatch<React.SetStateAction<SnakeProps>>
 ) {
   boardRef.current?.focus()
+  setSnake(() => ({
+    ...snakeStart,
+    direction: 'ArrowRight',
+  }))
+  debug && console.log('Game Over - checkGameOver 71')
   setGameStatus(true)
 }
 
@@ -87,6 +97,7 @@ function handleKeyDown(
     event.key === 'ArrowLeft' ||
     event.key === 'ArrowRight'
   ) {
+    event.preventDefault()
     setSnake((prevSnake: SnakeProps) => {
       if (isDirectionValid(prevSnake.direction, event.key))
         prevSnake.direction = event.key
@@ -139,7 +150,10 @@ function moveSnake(
     if (headX === tmpSnake.size[i].x && headY === tmpSnake.size[i].y) {
       // Snake collided with itself, handle collision
       // For example, you can end the game or reset the snake
-      setSnake(snakeStart)
+      setSnake(() => ({
+        ...snakeStart,
+        direction: 'ArrowRight',
+      }))
       setHighScore((prevHighScore: number) =>
         prevHighScore > score ? prevHighScore : score
       )
@@ -188,12 +202,16 @@ export default function SimpleApp() {
       setHighScore
     )
     if (gameStatus && !curStatus) {
-      setGameStatus(false)
-      setSnake(snakeStart)
+      debug && console.log('Game Over - checkGameOver 196')
+      setSnake(() => ({
+        ...snakeStart,
+        direction: 'ArrowRight',
+      }))
       setHighScore((prevHighScore: number) =>
         prevHighScore > score ? prevHighScore : score
       )
       setScore(0)
+      setGameStatus(false)
       return
     }
     // console.log('Pause', pauseGame)
@@ -207,9 +225,10 @@ export default function SimpleApp() {
   }, [gameStatus, setGameStatus, snake, pauseGame])
 
     useEffect(() => {
-        debug && setTimeout(() => {
-        if (gameStatus) setPauseGame(true)
-      }, 1000)
+      debug &&
+        setTimeout(() => {
+          if (gameStatus) setPauseGame(true)
+        }, 1000)
     }, [debug, gameStatus])
   return (
     <div className="simple-game">
@@ -240,7 +259,7 @@ export default function SimpleApp() {
           <ColorButton
             variant="contained"
             onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-              handleStartGame(event, boardRef, setGameStatus)
+              handleStartGame(event, boardRef, setGameStatus, setSnake)
             }
           >
             Start Playing
