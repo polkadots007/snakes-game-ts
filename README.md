@@ -35,3 +35,6 @@ export default {
 - React
 - Typescript
 - Hooks
+
+
+Live at https://polkadots007.github.io/snakes-game-ts/
